@@ -3,16 +3,28 @@ package com.example.testvoronkov
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.testvoronkov.ui.theme.*
 
@@ -24,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
             val darkVakue = isSystemInDarkTheme()
 
-            val currentStyle = remember { mutableStateOf(JetHabbitStyle.textPrimary)}
+            val currentStyle = remember { mutableStateOf(JetHabbitStyle.TextPrimary)}
             val isDarkMode = remember { mutableStateOf(darkVakue)}
 
             MainThem(
@@ -46,7 +58,7 @@ fun BottomBar(navController: NavHostController,items :List<IconScreens> = list) 
     Scaffold(bottomBar = {
 
 
-        BottomNavigation(backgroundColor = gol0, contentColor = Color.White){
+        BottomNavigation(backgroundColor = JetHabbitTheme.colors.primaryBackground, contentColor = Color.White){
 
             items.forEach{ item->
 
@@ -80,16 +92,50 @@ fun BottomBar(navController: NavHostController,items :List<IconScreens> = list) 
     }
 }
 
-@Preview
-@Composable
-fun Prreview2() {
-    val context = LocalContext.current
-    BottomBar(navController = NavHostController(context))
-}
 
 @Composable
 fun Home() {
-    Text(text = "HOME")
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(JetHabbitTheme.colors.primaryBackground)) {
+        LazyColumn(
+            Modifier
+                .scrollable(rememberLazyListState(), Orientation.Vertical)
+                .fillMaxWidth()) {
+            item {
+                HomeLazy("Название","2")
+            }
+        }
+    }
+}
+
+
+@Composable
+fun HomeLazy(name:String,places:String) {
+    Card(modifier = Modifier
+        .padding(horizontal = 8.dp, vertical = 8.dp)
+        .fillMaxWidth(),
+        elevation = 2.dp,
+        backgroundColor = JetHabbitTheme.colors.secondaryBackground,
+        shape = RoundedCornerShape(corner = CornerSize(16.dp))
+    ) {
+        Row {
+
+            Column(modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .align(Alignment.CenterVertically)) {
+                Column(verticalArrangement = Arrangement.Bottom) {
+
+                    Text(text = name, color = JetHabbitTheme.colors.primaryText)
+                    Text(text = "Ваше место:$places", color = JetHabbitTheme.colors.primaryText)
+
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -103,5 +149,23 @@ fun TestCheck() {
 @Composable
 fun Account() {
     Text(text = "ACCOUNT")
+}
+
+@Composable
+fun Prreview2() {
+    val context = LocalContext.current
+    BottomBar(navController = NavHostController(context))
+
+    val darkVakue = isSystemInDarkTheme()
+
+    val currentStyle = remember { mutableStateOf(JetHabbitStyle.TextPrimary)}
+    val isDarkMode = remember { mutableStateOf(darkVakue)}
+
+    MainThem(
+        style = currentStyle.value,
+        darkThem = isDarkMode.value
+    ) {
+        BottomBar(navController = NavHostController(context))
+    }
 }
 

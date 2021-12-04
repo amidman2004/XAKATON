@@ -26,24 +26,28 @@ val yellow = Color(0xFFEDED00)
 
 val baseLightPalette= JetHabbitColors(
     //primaryBackground = Color(0xFD007BFF),
-    primaryText = Color(0xFFFFFFFF),
+    primaryText = Color(0xFF000000),
     Brush.verticalGradient(listOf(
         white,
         biruzoviy
     )),
-    //secondaryBackground = Color(0xFD005D6D),
+
+    primaryBackground = gol0,
+
+    secondaryBackground = Color(0xFDFFFFFF),
     //secondaryText = Color(0xFD005D6D),
     tintColor = Color.Magenta
 )
 
 val baseDarkPalette = JetHabbitColors(
     //primaryBackground = Color(0xFD007BFF),
-    primaryText = Color(0xFD000000),
+    primaryText = Color(0xFDFFFFFF),
     Brush.verticalGradient(listOf(
         black,
         biruzoviy
     )),
-    //secondaryBackground = Color(0xFD005D6D),
+    primaryBackground =Color(0xFF141414),
+    secondaryBackground = Color(0xFD000000),
     //secondaryText = Color(0xFD005D6D),
     tintColor = Color.Magenta
 )
@@ -63,12 +67,29 @@ val TextPrimaryDarkPalette = baseDarkPalette.copy(
 )
 
 val GradientLightPalette = baseLightPalette.copy(
-    primaryText = Color(0xFFFFFFFF)
+    primaryText = Color(0xFF000000)
 )
 
 val GradientDarkPalette = baseDarkPalette.copy(
-    primaryText = Color(0xFF000000)
+    primaryText = Color(0xFFFFFFFF)
 )
+
+val BackgroundLightPalette = baseLightPalette.copy(
+    tintColor = gol0
+)
+
+val BackgroundDarkPalette = baseDarkPalette.copy(
+    primaryBackground =Color(0xFF141414),
+)
+
+val secondaryBackgroundLightPalette = baseLightPalette.copy(
+    secondaryBackground =Color(0xFFFFFFFF),
+)
+
+val secondaryBackgroundDarkPalette = baseDarkPalette.copy(
+    secondaryBackground =Color(0xFF141414),
+)
+
 
 
 val purpleLightPalette = baseLightPalette.copy(
@@ -79,37 +100,5 @@ val purpleDarkPalette = baseDarkPalette.copy(
     tintColor = Color(0xFF28003D)
 )
 
-val orangeLightPalette = baseLightPalette.copy(
-    tintColor = Color(0xFFE6FF00)
-)
-
-val orangeDarkPalette = baseDarkPalette.copy(
-    tintColor = Color(0xFFF79400)
-)
-
-val redLightPalette = baseLightPalette.copy(
-    tintColor = Color(0xFFFF0000)
-)
-
-val redDarkPalette = baseDarkPalette.copy(
-    tintColor = Color(0xFF7E0000)
-)
-
-val GreenLightPalette = baseLightPalette.copy(
-    tintColor = Color(0xFFFF0000)
-)
-
-val GreenDarkPalette = baseDarkPalette.copy(
-    tintColor = Color(0xFF7E0000)
-)
-
-
-val blueLightPalette = baseLightPalette.copy(
-    tintColor = Color(0xFF0054FF)
-)
-
-val blueDarkPalette = baseDarkPalette.copy(
-    tintColor = Color(0xFF0014C5)
-)
 
 

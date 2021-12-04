@@ -11,9 +11,9 @@ import java.time.format.TextStyle
 data class JetHabbitColors (
     val primaryText:Color,
     val gradient:Brush,
-    //val primaryBackground:Color,
+    val primaryBackground:Color,
     //val secondaryText:Color,
-    //val secondaryBackground:Color,
+    val secondaryBackground:Color,
     val tintColor:Color
     )
 
@@ -51,7 +51,7 @@ object JetHabbitTheme{
         get() = LocalJetHabbitImage.current
 }
 enum class JetHabbitStyle{
-    textPrimary,Purple,gradient
+    TextPrimary,Purple,Gradient,Background,SecondaryBackground
 }
 enum class JetHabbitSize{
     Small, Medium, Big

@@ -49,10 +49,15 @@ class Belakov : ComponentActivity() {
         setContent {
 
 
+            val darkVakue = isSystemInDarkTheme()
 
-            MainThem {
+            val currentStyle = remember { mutableStateOf(JetHabbitStyle.TextPrimary)}
+            val isDarkMode = remember { mutableStateOf(darkVakue)}
 
-                val colorTest = JetHabbitTheme.colors.tintColor
+            MainThem(
+                style = currentStyle.value,
+                darkThem = isDarkMode.value
+            ) {
 
                 val check = remember {
                     mutableStateOf(false)
@@ -60,6 +65,7 @@ class Belakov : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     Greeting(check.value)
                 }
+
             }
         }
     }
@@ -117,7 +123,8 @@ fun Greeting(check:Boolean) {
                     Text(text = "Логин",color = JetHabbitTheme.colors.primaryText)
                 }, colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = gol_1,
-                    unfocusedBorderColor = gol_2
+                    unfocusedBorderColor = gol_2,
+                    textColor = JetHabbitTheme.colors.primaryText
                 )
                 )
 
@@ -137,7 +144,8 @@ fun Greeting(check:Boolean) {
                 else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = gol_1,
-                        unfocusedBorderColor = gol_2
+                        unfocusedBorderColor = gol_2,
+                        textColor = JetHabbitTheme.colors.primaryText
                     )
                 )
 
@@ -165,7 +173,8 @@ fun Greeting(check:Boolean) {
                     Text(text = "Логин",color = JetHabbitTheme.colors.primaryText)
                 }, colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = gol_1,
-                    unfocusedBorderColor = gol_2
+                    unfocusedBorderColor = gol_2,
+                    textColor = JetHabbitTheme.colors.primaryText
                 )
                 )
 
@@ -185,7 +194,8 @@ fun Greeting(check:Boolean) {
                 else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = gol_1,
-                        unfocusedBorderColor = gol_2
+                        unfocusedBorderColor = gol_2,
+                        textColor = JetHabbitTheme.colors.primaryText
                     )
                 )
 
@@ -205,7 +215,8 @@ fun Greeting(check:Boolean) {
                 else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = gol_1,
-                        unfocusedBorderColor = gol_2
+                        unfocusedBorderColor = gol_2,
+                        textColor = JetHabbitTheme.colors.primaryText
                     )
                 )
             }
@@ -274,7 +285,7 @@ fun Dialog(bol: MutableState<Boolean>,title: String,text: @Composable (() -> Uni
                 }
                 ButtonF(modifier = Modifier.padding(start = 25.dp,end = 25.dp,bottom = 10.dp), text = "Продолжить",onClick = onClick)
             }
-        },text = text, shape = RoundedCornerShape(20.dp))
+        },text = text, shape = RoundedCornerShape(20.dp), backgroundColor = JetHabbitTheme.colors.primaryBackground)
     }
 }
 
@@ -291,7 +302,7 @@ fun Preview() {
 
     val darkVakue = isSystemInDarkTheme()
 
-    val currentStyle = remember { mutableStateOf(JetHabbitStyle.textPrimary)}
+    val currentStyle = remember { mutableStateOf(JetHabbitStyle.TextPrimary)}
     val isDarkMode = remember { mutableStateOf(darkVakue)}
 
     MainThem(
