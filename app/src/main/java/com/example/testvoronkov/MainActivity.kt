@@ -1,33 +1,60 @@
 package com.example.testvoronkov
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
 import com.example.testvoronkov.ui.theme.*
+import java.io.File
+import java.util.*
 
 data class icons(var id:String,var title:String,var paint : Int)
 class MainActivity : ComponentActivity() {
+    val urik = mutableStateOf<Uri?>(null)
+    val select = registerForActivityResult(ActivityResultContracts.GetContent()){ uri ->
+        urik.value = uri
+    }
+    var uri: Uri? = null
+    val take = registerForActivityResult(ActivityResultContracts.TakePicture()){
+        if (it){
+            urik.value = uri
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,14 +68,14 @@ class MainActivity : ComponentActivity() {
                 style = currentStyle.value,
                 darkThem = isDarkMode.value
             ) {
-                BottomBar(navController = NavHostController(applicationContext))
+                BottomBar(navController = NavHostController(applicationContext), list,"FIO")
             }
         }
     }
-}
+
 
 @Composable
-fun BottomBar(navController: NavHostController,items :List<IconScreens> = list) {
+fun BottomBar(navController: NavHostController,items :List<IconScreens> = list,FIO: String) {
     val current = remember {
         mutableStateOf("home")
     }
@@ -56,17 +83,35 @@ fun BottomBar(navController: NavHostController,items :List<IconScreens> = list) 
 
     Scaffold(
         topBar = {
-                 TopAppBar(backgroundColor = biruzoviy, content = {
-                     IconButton(onClick = { Toast.makeText(context, "${current.value}", Toast.LENGTH_SHORT).show()}, modifier = Modifier
-                         .size(40.dp)
-                         .background(Color.White, shape = CircleShape)
-                         .padding(start = 50.dp)) {
+                 TopAppBar(title = { Text(text = FIO)}, backgroundColor = biruzoviy, navigationIcon = {
+                     Box(modifier = Modifier.background(shape = CircleShape,
+                         color = Color.Black).size(40.dp)){
+                         IconButton(onClick = {current.value = "profile"
+                         when(current.value){
+                             "home" ->{
+                                 IconScreens.Home.color =  biruzoviy
+                                 IconScreens.Test.color =  Color.Gray
+                                 IconScreens.Account.color =  Color.Gray
 
-                     val painter = remember {
-                         mutableStateOf(R.drawable.image)
-                     }
-                     Image(painter = painterResource(id = painter.value), contentDescription = null)
-                 }})
+                             }
+                             "test" -> {
+                                 IconScreens.Home.color =  Color.Gray
+                                 IconScreens.Test.color =  biruzoviy
+                                 IconScreens.Account.color =  Color.Gray
+                             }
+                             "profile" -> {
+                                 IconScreens.Home.color =  Color.Gray
+                                 IconScreens.Test.color =  Color.Gray
+                                 IconScreens.Account.color =  biruzoviy
+                             }
+                         }},Modifier.background(shape = CircleShape,
+                         color = Color.Black).size(40.dp)) {
+                         Image(painter = painterResource(id = R.drawable.image), contentDescription = null,Modifier.background(shape = CircleShape,
+                             color = Color.Black
+                         ).clip(CircleShape), )
+                     }}
+
+                 })
 
 
         },
@@ -87,10 +132,26 @@ fun BottomBar(navController: NavHostController,items :List<IconScreens> = list) 
                     },
                     onClick = {
                         current.value = item.id
-                        IconScreens.Home.color =  Color.Gray
-                        IconScreens.Test.color =  Color.Gray
-                        IconScreens.Account.color =  Color.Gray
-                        item.color = gol1
+                        when(current.value){
+                            "home" ->{
+                                IconScreens.Home.color =  biruzoviy
+                                IconScreens.Test.color =  Color.Gray
+                                IconScreens.Account.color =  Color.Gray
+
+                            }
+                            "test" -> {
+                                IconScreens.Home.color =  Color.Gray
+                                IconScreens.Test.color =  biruzoviy
+                                IconScreens.Account.color =  Color.Gray
+                            }
+                            "profile" -> {
+                                IconScreens.Home.color =  Color.Gray
+                                IconScreens.Test.color =  Color.Gray
+                                IconScreens.Account.color =  biruzoviy
+                            }
+                        }
+
+
 
                     }
                 ) 
@@ -108,7 +169,7 @@ fun BottomBar(navController: NavHostController,items :List<IconScreens> = list) 
 @Composable
 fun Prreview2() {
     val context = LocalContext.current
-    BottomBar(navController = NavHostController(context))
+    BottomBar(navController = NavHostController(context),list,"FIO")
 }
 
 @Composable
@@ -122,6 +183,9 @@ fun Test() {
 }
 @Composable
 fun Account(FIO:String) {
+    val dialog = remember {
+        mutableStateOf(false)
+    }
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Color.White)){
@@ -138,14 +202,74 @@ fun Account(FIO:String) {
             Text(text = FIO,modifier = Modifier.align(CenterHorizontally))
 
         }
+        Row(modifier = Modifier
+            .align(BottomCenter)
+            .padding(bottom = 100.dp)) {
+
+            Button(onClick = {dialog.value = true}, modifier = Modifier
+                .size(200.dp, 60.dp)
+                , colors = ButtonDefaults.buttonColors(
+                    backgroundColor = biruzoviy
+                )) {
+                Text(text = "ChangePhoto", color = Color.White)
+            }
+            if (dialog.value){
+                dialog(dialog = dialog)
+            }
+        }
     }
-    Button(onClick = { /*TODO*/ }) {
-        
-    }
+
+
 }
-@Preview
+
+    @Composable
+    fun dialog(dialog:MutableState<Boolean>) {
+        if(dialog.value){
+            AlertDialog(onDismissRequest = {dialog.value = false}, buttons = {
+                Row(Modifier.height(80.dp)) {
+                    Spacer(modifier = Modifier.size(5.dp))
+                    Button(onClick = {select.launch("image/*")},
+                        modifier = Modifier
+                            .size(160.dp, 70.dp)
+                            .align(CenterVertically),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = biruzoviy
+                        )
+                    ) {
+                        Text(text = "Change From Gallery", color = Color.White)
+                    }
+                    Spacer(modifier = Modifier.size(20.dp))
+                    Button(onClick = {
+                        val file = File(
+                            filesDir,
+                            UUID
+                                .randomUUID()
+                                .toString() + ".jpg"
+                        )
+                        uri = FileProvider.getUriForFile(
+                            applicationContext,
+                            "com.example.testvoronkov.fileprovider",
+                            file
+                        )
+                        take.launch(uri)},
+                        modifier = Modifier
+                            .size(160.dp, 70.dp)
+                            .align(CenterVertically)
+                            ,colors = ButtonDefaults.buttonColors(
+                            backgroundColor = biruzoviy
+                        )) {
+                        Text(text = "Change From Camera", color = Color.White)
+                    }
+                    Spacer(modifier = Modifier.size(5.dp))
+                }
+            })
+        }
+
+    }
+
 @Composable
 fun rrr() {
     Account(FIO = "FIO")
 }
 
+}
