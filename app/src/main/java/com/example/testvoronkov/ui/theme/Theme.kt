@@ -44,19 +44,21 @@ fun MainThem(
         true->{
             when(style){
                 JetHabbitStyle.Purple -> purpleDarkPalette
-                JetHabbitStyle.Blue -> blueDarkPalette
-                JetHabbitStyle.Red -> redDarkPalette
-                JetHabbitStyle.Green -> GreenDarkPalette
-                JetHabbitStyle.Orange -> orangeDarkPalette
+                //JetHabbitStyle.Blue -> blueDarkPalette
+                //JetHabbitStyle.Red -> redDarkPalette
+                //JetHabbitStyle.Green -> GreenDarkPalette
+                //JetHabbitStyle.Orange -> orangeDarkPalette
+                JetHabbitStyle.textPrimary -> TextPrimaryDarkPalette
             }
         }
         false->{
             when(style){
                 JetHabbitStyle.Purple -> purpleLightPalette
-                JetHabbitStyle.Blue -> blueLightPalette
-                JetHabbitStyle.Red -> redLightPalette
-                JetHabbitStyle.Green -> GreenLightPalette
-                JetHabbitStyle.Orange -> orangeLightPalette
+                //JetHabbitStyle.Blue -> blueLightPalette
+                //JetHabbitStyle.Red -> redLightPalette
+                //JetHabbitStyle.Green -> GreenLightPalette
+                //JetHabbitStyle.Orange -> orangeLightPalette
+                JetHabbitStyle.textPrimary -> TextPrimaryLightPalette
             }
         }
     }

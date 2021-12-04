@@ -1,9 +1,7 @@
 package com.example.testvoronkov.ui.theme
 
-import android.graphics.drawable.Icon
 import androidx.compose.ui.graphics.Color
 import android.graphics.drawable.shapes.Shape
-import androidx.compose.material.LocalAbsoluteElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
@@ -11,11 +9,11 @@ import java.time.format.TextStyle
 
 data class JetHabbitColors (
     val primaryText:Color,
-    val primaryBackground:Color,
-    val secondaryText:Color,
-    val secondaryBackground:Color,
-    val tintColor:Color,
-        )
+    //val primaryBackground:Color,
+    //val secondaryText:Color,
+    //val secondaryBackground:Color,
+    val tintColor:Color
+    )
 
 data class JetHabbitTypography(
     val heading: TextStyle,
@@ -51,7 +49,7 @@ object JetHabbitTheme{
         get() = LocalJetHabbitImage.current
 }
 enum class JetHabbitStyle{
-    Purple,Blue,Red,Green,Orange
+    textPrimary,Purple
 }
 enum class JetHabbitSize{
     Small, Medium, Big

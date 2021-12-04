@@ -11,22 +11,37 @@ val gol = Color(0xFD73EAFF)
 val gol_1 = Color(0xFD007BFF)
 val gol_2 = Color(0xFD005D6D)
 
+val white = Color(0xFFFFFFFF)
+val turquoise = Color(0xFF00ACAB)
+val blue = Color(0xFF0518A1)
+val yellow = Color(0xFFEDED00)
+
+
 
 val baseLightPalette= JetHabbitColors(
-    primaryBackground = Color(0xFD007BFF),
-    primaryText = Color(0xFDFF0000),
-    secondaryBackground = Color(0xFD005D6D),
-    secondaryText = Color(0xFD005D6D),
+    //primaryBackground = Color(0xFD007BFF),
+    primaryText = Color(0xFDFFFFFF),
+    //secondaryBackground = Color(0xFD005D6D),
+    //secondaryText = Color(0xFD005D6D),
     tintColor = Color.Magenta
 )
 
 val baseDarkPalette = JetHabbitColors(
-    primaryBackground = Color(0xFD007BFF),
-    primaryText = Color(0xFDC7FF00),
-    secondaryBackground = Color(0xFD005D6D),
-    secondaryText = Color(0xFD005D6D),
+    //primaryBackground = Color(0xFD007BFF),
+    primaryText = Color(0xFD000000),
+    //secondaryBackground = Color(0xFD005D6D),
+    //secondaryText = Color(0xFD005D6D),
     tintColor = Color.Magenta
 )
+
+val TextPrimaryLightPalette = baseLightPalette.copy(
+    primaryText = Color(0xFFC50000)
+)
+
+val TextPrimaryDarkPalette = baseDarkPalette.copy(
+    primaryText = Color(0xFF00FFE1)
+)
+
 
 val purpleLightPalette = baseLightPalette.copy(
     tintColor = Color(0xFFA900FF)

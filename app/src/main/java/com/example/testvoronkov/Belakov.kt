@@ -50,7 +50,10 @@ class Belakov : ComponentActivity() {
 
 
 
-            MaterialTheme() {
+            MainThem {
+
+                val colorTest = JetHabbitTheme.colors.tintColor
+
                 val check = remember {
                     mutableStateOf(false)
                 }
@@ -102,7 +105,7 @@ fun Greeting(check:Boolean) {
                 Text(text = "Вход",modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 15.dp),
-                    textAlign = TextAlign.Center,style = MaterialTheme.typography.h6,color = Color.Black)
+                    textAlign = TextAlign.Center,style = MaterialTheme.typography.h6,color = JetHabbitTheme.colors.primaryText)
 
                 OutlinedTextField(value = login1.value,onValueChange = {
                     login1.value = it
@@ -111,7 +114,7 @@ fun Greeting(check:Boolean) {
                         contentDescription = null,
                         Modifier.size(25.dp),)
                 },label = {
-                    Text(text = "Логин")
+                    Text(text = "Логин",color = JetHabbitTheme.colors.primaryText)
                 }, colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = gol_1,
                     unfocusedBorderColor = gol_2
@@ -125,7 +128,7 @@ fun Greeting(check:Boolean) {
                         contentDescription = null,
                         Modifier.size(25.dp),)
                 },label = {
-                    Text(text = "Пароль")
+                    Text(text = "Пароль",color = JetHabbitTheme.colors.primaryText)
                 }, trailingIcon = {
                     IconButton(onClick = { passwordVisibility2 = !passwordVisibility2}) {
                         Icon(painter = icon2, contentDescription = null, Modifier.size(25.dp))
@@ -150,7 +153,7 @@ fun Greeting(check:Boolean) {
                 Text(text = "Регистрация",modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 15.dp),
-                    textAlign = TextAlign.Center,style = MaterialTheme.typography.h6,color = Color.Black)
+                    textAlign = TextAlign.Center,style = MaterialTheme.typography.h6,color = JetHabbitTheme.colors.primaryText)
 
                 OutlinedTextField(value = login.value,onValueChange = {
                     login.value = it
@@ -159,7 +162,7 @@ fun Greeting(check:Boolean) {
                         contentDescription = null,
                         Modifier.size(25.dp),)
                 },label = {
-                    Text(text = "Логин")
+                    Text(text = "Логин",color = JetHabbitTheme.colors.primaryText)
                 }, colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = gol_1,
                     unfocusedBorderColor = gol_2
@@ -173,7 +176,7 @@ fun Greeting(check:Boolean) {
                         contentDescription = null,
                         Modifier.size(25.dp),)
                 },label = {
-                    Text(text = "Пароль")
+                    Text(text = "Пароль",color = JetHabbitTheme.colors.primaryText)
                 }, trailingIcon = {
                     IconButton(onClick = { passwordVisibility1 = !passwordVisibility1}) {
                         Icon(painter = icon1, contentDescription = null, Modifier.size(25.dp))
@@ -193,7 +196,7 @@ fun Greeting(check:Boolean) {
                         contentDescription = null,
                         Modifier.size(25.dp),)
                 },label = {
-                    Text(text = "Повторите пароль")
+                    Text(text = "Повторите пароль",color = JetHabbitTheme.colors.primaryText)
                 }, trailingIcon = {
                     IconButton(onClick = { passwordVisibility = !passwordVisibility}) {
                         Icon(painter = icon, contentDescription = null, Modifier.size(25.dp))
@@ -221,7 +224,7 @@ fun Greeting(check:Boolean) {
                     .height(20.dp)) {
 
             }
-            Text(text = "Нет подключения",color = Color.White,
+            Text(text = "Нет подключения",color = JetHabbitTheme.colors.primaryText,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(20.dp),textAlign = TextAlign.Center)
@@ -284,7 +287,7 @@ fun Dialog(bol: MutableState<Boolean>,title: String,text: @Composable (() -> Uni
 @Composable
 fun ButtonF(modifier:Modifier,text:String,onClick:()->Unit) {
     Button(onClick = onClick,modifier = modifier,colors = ButtonDefaults.buttonColors(backgroundColor = gol_1),shape = AbsoluteCutCornerShape(5.dp)) {
-        Text(text = text,color = Color.White,)
+        Text(text = text,color = JetHabbitTheme.colors.primaryText)
     }
 }
 
@@ -292,8 +295,15 @@ fun ButtonF(modifier:Modifier,text:String,onClick:()->Unit) {
 @Composable
 fun Preview() {
 
+    val darkVakue = isSystemInDarkTheme()
 
-    MainThem() {
+    val currentStyle = remember { mutableStateOf(JetHabbitStyle.textPrimary)}
+    val isDarkMode = remember { mutableStateOf(darkVakue)}
+
+    MainThem(
+        style = currentStyle.value,
+        darkThem = isDarkMode.value
+    ) {
         val check = remember {
             mutableStateOf(false)
         }
@@ -303,5 +313,3 @@ fun Preview() {
     }
 
 }
-
-
