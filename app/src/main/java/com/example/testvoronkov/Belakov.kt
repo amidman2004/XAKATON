@@ -233,7 +233,7 @@ fun Greeting(check:Boolean) {
 
         Box(modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(Color.White, gol)))
+            .background(JetHabbitTheme.colors.gradient)
         ){
             Column(Modifier.fillMaxWidth()) {
                 Text(text = "TEST TEXT",modifier = Modifier
@@ -250,19 +250,13 @@ fun Greeting(check:Boolean) {
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = CenterHorizontally) {
-
+                Spacer(modifier = Modifier.size(200.dp))
                 ButtonF(modifier = Modifier
                     .padding(vertical = 10.dp)
-                    .width(150.dp),
+                    .width(270.dp).height(80.dp),
                     text = "Вход",) {
                     dialogRem.value = true
                     dialogCheck.value = 1
-                }
-                ButtonF(modifier = Modifier
-                    .padding(vertical = 10.dp)
-                    .width(150.dp), text = "Регистрация") {
-                    dialogCheck.value = 2
-                    dialogRem.value = true
                 }
             }
         }

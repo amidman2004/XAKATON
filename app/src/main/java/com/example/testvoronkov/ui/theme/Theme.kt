@@ -44,6 +44,7 @@ fun MainThem(
         true->{
             when(style){
                 JetHabbitStyle.Purple -> purpleDarkPalette
+                JetHabbitStyle.gradient -> GradientDarkPalette
                 //JetHabbitStyle.Blue -> blueDarkPalette
                 //JetHabbitStyle.Red -> redDarkPalette
                 //JetHabbitStyle.Green -> GreenDarkPalette
@@ -54,6 +55,7 @@ fun MainThem(
         false->{
             when(style){
                 JetHabbitStyle.Purple -> purpleLightPalette
+                JetHabbitStyle.gradient -> GradientLightPalette
                 //JetHabbitStyle.Blue -> blueLightPalette
                 //JetHabbitStyle.Red -> redLightPalette
                 //JetHabbitStyle.Green -> GreenLightPalette
