@@ -1,11 +1,13 @@
 package com.example.testvoronkov
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -22,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,6 +100,15 @@ fun BottomBar(navController: NavHostController,items :List<IconScreens> = list) 
 @Composable
 fun Home() {
 
+    val Description = ""
+    var Description0 = "Description"
+    if (Description.length>=100){
+        Description0 = Description.replaceRange(
+            101 until Description.length,
+            "..."
+        )
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -106,7 +118,7 @@ fun Home() {
                 .scrollable(rememberLazyListState(), Orientation.Vertical)
                 .fillMaxWidth()) {
             item {
-                HomeLazy("Название","2")
+                HomeLazy("1","Название",Description0,"Nominations ","1000")
             }
         }
     }
@@ -114,7 +126,9 @@ fun Home() {
 
 
 @Composable
-fun HomeLazy(name:String,places:String) {
+fun HomeLazy(id:String,name:String,Description:String,Nominations:String,participant:String) {
+    val context = LocalContext.current
+
     Card(modifier = Modifier
         .padding(horizontal = 8.dp, vertical = 8.dp)
         .fillMaxWidth(),
@@ -127,12 +141,28 @@ fun HomeLazy(name:String,places:String) {
             Column(modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
-                .align(Alignment.CenterVertically)) {
-                Column(verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.End,modifier = Modifier.fillMaxWidth()) {
-                    Text(text = name, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(end = 5.dp))
+                .align(Alignment.CenterVertically)
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        val intent = Intent(context, EventOpen::class.java).apply {
+                            putExtra("id", id)
+                            putExtra("name", name)
+                            putExtra("Description", Description)
+                            putExtra("Nominations", Nominations)
+                            putExtra("participant", participant)
+                        }
+                        context.startActivities(arrayOf(intent))
+                    })
+                }) {
+                Column(verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.Start,modifier = Modifier.fillMaxWidth()) {
+                    Text(text = name, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(5.dp), style = MaterialTheme.typography.body2)
                 }
-                Text(text = name, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(end = 5.dp))
 
+                Text(text = Description, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(5.dp))
+
+                Column(verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "Всего участников: $participant", color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(5.dp))
+                }
             }
         }
     }
@@ -140,7 +170,71 @@ fun HomeLazy(name:String,places:String) {
 
 @Composable
 fun Test() {
-    Text(text = "TEST")
+
+    val Description = ""
+    var Description0 = "Description"
+    if (Description.length>=100){
+        Description0 = Description.replaceRange(
+            101 until Description.length,
+            "..."
+        )
+    }
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(JetHabbitTheme.colors.primaryBackground)) {
+        LazyColumn(
+            Modifier
+                .scrollable(rememberLazyListState(), Orientation.Vertical)
+                .fillMaxWidth()) {
+            item {
+               LazyTest("1","Название",Description0,"Nominations ","1000","10/100")
+            }
+        }
+    }
+}
+
+@Composable
+fun LazyTest(id:String,name:String,Description:String,Nominations:String,participant:String, places:String) {
+    val context = LocalContext.current
+
+    Card(modifier = Modifier
+        .padding(horizontal = 8.dp, vertical = 8.dp)
+        .fillMaxWidth(),
+        elevation = 2.dp,
+        backgroundColor = JetHabbitTheme.colors.secondaryBackground,
+        shape = RoundedCornerShape(corner = CornerSize(16.dp))) {
+        Row {
+            Column(modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .align(Alignment.CenterVertically)
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        val intent = Intent(context, EventOpen::class.java).apply {
+                            putExtra("id", id)
+                            putExtra("name", name)
+                            putExtra("Description", Description)
+                            putExtra("Nominations", Nominations)
+                            putExtra("participant", participant)
+                            putExtra("places", places)
+                        }
+                        context.startActivities(arrayOf(intent))
+                    })
+                }) {
+                Column(verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.Start,modifier = Modifier.fillMaxWidth()) {
+                    Text(text = name, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(5.dp), style = MaterialTheme.typography.body2)
+                }
+
+                Text(text = Description, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(5.dp))
+
+                Column(verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "Ваше место: $places", color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(5.dp))
+                }
+            }
+        }
+    }
 }
 @Composable
 fun TestCheck() {
@@ -149,23 +243,5 @@ fun TestCheck() {
 @Composable
 fun Account() {
     Text(text = "ACCOUNT")
-}
-
-@Composable
-fun Prreview2() {
-    val context = LocalContext.current
-    BottomBar(navController = NavHostController(context))
-
-    val darkVakue = isSystemInDarkTheme()
-
-    val currentStyle = remember { mutableStateOf(JetHabbitStyle.TextPrimary)}
-    val isDarkMode = remember { mutableStateOf(darkVakue)}
-
-    MainThem(
-        style = currentStyle.value,
-        darkThem = isDarkMode.value
-    ) {
-        BottomBar(navController = NavHostController(context))
-    }
 }
 
