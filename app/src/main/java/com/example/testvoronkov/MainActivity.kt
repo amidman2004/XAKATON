@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -127,12 +128,11 @@ fun HomeLazy(name:String,places:String) {
                 .padding(16.dp)
                 .fillMaxWidth()
                 .align(Alignment.CenterVertically)) {
-                Column(verticalArrangement = Arrangement.Bottom) {
-
-                    Text(text = name, color = JetHabbitTheme.colors.primaryText)
-                    Text(text = "Ваше место:$places", color = JetHabbitTheme.colors.primaryText)
-
+                Column(verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.End,modifier = Modifier.fillMaxWidth()) {
+                    Text(text = name, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(end = 5.dp))
                 }
+                Text(text = name, color = JetHabbitTheme.colors.primaryText, modifier = Modifier.padding(end = 5.dp))
+
             }
         }
     }
