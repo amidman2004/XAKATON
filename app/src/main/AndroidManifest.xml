@@ -9,11 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestVoronkov">
-        <activity
-            android:name=".ui.theme.TestOpen"
-            android:exported="true"
-            android:label="@string/title_activity_test_open"
-            android:theme="@style/Theme.TestVoronkov.NoActionBar" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.testvoronkov.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/xml" />
+        </provider>
+
         <activity
             android:name=".EventOpen"
             android:exported="true"
